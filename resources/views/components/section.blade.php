@@ -1,4 +1,4 @@
-@props(['class'])
+@props(['class' => ''])
 
 @php
 $classes = 'container mx-auto max-w-4xl mt-6 ';

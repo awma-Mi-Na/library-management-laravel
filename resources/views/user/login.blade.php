@@ -1,5 +1,5 @@
 <x-layout>
-    <x-section class="w-1/2">
+    <x-section class="w-1/3">
         <div class="bg-gray-50 border p-6">
             <h1 class="font-bold mb-2 text-xl uppercase">Login</h1>
             <form

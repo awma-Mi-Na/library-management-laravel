@@ -1,8 +1,11 @@
 <x-layout>
-    <div class="grid grid-cols-12">
+    <x-section>
 
-        @foreach ($books as $book)
-            <x-book-card :book="$book" />
-        @endforeach
-    </div>
+        <div class="grid grid-cols-12">
+
+            @foreach ($books as $book)
+                <x-book-card :book="$book" />
+            @endforeach
+        </div>
+    </x-section>
 </x-layout>

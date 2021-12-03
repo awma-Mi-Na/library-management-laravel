@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <div class="w-full lg:h-28 bg-gray-700">
+    <div class="w-full lg:h-28 bg-gray-600">
         <header class="max-w-6xl mx-auto pt-8 text-white">
             <div class="grid grid-cols-10 items-center">
                 <a
@@ -40,13 +40,18 @@
                 >
 
                     <i class="border-r-2 fa-search fas h-full pl-2.5 py-1 text-black w-1/12"></i>
-
+                    <input
+                        type="hidden"
+                        name="author"
+                        value="{{ request('author') }}"
+                    >
                     <input
                         type="search"
                         name="search"
                         id="search"
                         class="focus:outline-none px-2 py-1 text-black text-sm w-10/12"
                         placeholder="Search for books,authors..."
+                        value="{{ request('search') }}"
                     >
 
                 </form>
@@ -76,7 +81,7 @@
                 </d>
         </header>
     </div>
-    @include('components.section')
+    {{ $slot }}
 
     @if (session()->has('success'))
         <div
@@ -88,6 +93,8 @@
             <p> {{ session('success') }} </p>
         </div>
     @endif
+    <footer class="h-60 bg-gray-600 mt-6">
+    </footer>
 </body>
 {{-- <style>
     .aaa {
