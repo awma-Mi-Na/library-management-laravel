@@ -1,11 +1,11 @@
 <?php
 
-use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBooksTable extends Migration
+class CreateBorrowingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,12 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
-            $table->integer('isbn')->unique();
-            $table->string('title', 255);
-            $table->foreignId('user_id')->constrained();
-            $table->string('slug', 255)->unique();
-            $table->string('summary');
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('book_id')->unique()->constrained()->cascadeOnDelete();
             $table->timestamps();
+            $table->timestamp('due_date')->nullable();
         });
     }
 
@@ -32,6 +30,6 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('borrowings');
     }
 }

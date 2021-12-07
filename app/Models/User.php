@@ -50,4 +50,12 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($value);
     }
+    public function borrowings()
+    {
+        return $this->hasMany(Borrowing::class);
+    }
+    public function borrowing_histories()
+    {
+        return $this->hasMany(Borrowing_history::class);
+    }
 }

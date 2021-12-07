@@ -56,25 +56,40 @@
 
                 </form>
 
-                <div class="col-start-10 flex gap-4 items-center justify-around text-sm w-1/5">
+                <div class="col-span-2 col-start-9 flex gap-4 items-center justify-around text-sm">
                     @guest
-                        <a
-                            href="/register"
-                            class="border px-4 py-2 rounded-md"
-                        >Register</a>
-                        <a
-                            href="/login"
-                            class="border px-4 py-2 rounded-md"
-                        >Login</a>
+                        <x-nav-item
+                            title='Register'
+                            uri='/register'
+                        />
+                        <x-nav-item
+                            title='Login'
+                            uri='/login'
+                        />
+
                     @endguest
                     @auth
+                        @admin
+                        <x-nav-item
+                            title='Admin'
+                            uri='/admin/books'
+                        />
+                    @else
+                        <x-nav-item
+                            title='{{ auth()->user()->name }}'
+                            uri='/borrowings'
+                        />
+                        @endadmin
                         <form
-                            action="logout"
+                            action="/logout"
                             method="POST"
-                            class="border px-4 py-2 rounded-md"
+                            class="border duration-100 ease-in hover:bg-green-500 rounded-md transition"
                         >
                             @csrf
-                            <button type="submit">Logout</button>
+                            <button
+                                type="submit"
+                                class="px-4 py-2"
+                            >Logout</button>
                         </form>
                     @endauth
                 </div>

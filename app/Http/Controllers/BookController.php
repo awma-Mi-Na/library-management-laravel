@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Borrowing;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -15,6 +16,10 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        return view('books.show', ['book' => $book]);
+        $isBorrowed = $book->borrowings->contains('book_id', $book->id);
+        // if ($user_id = auth()->user()->id) {
+        //     $isBorrowed = $book->borrowings->contains('user_id', $user_id);
+        // }
+        return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed]);
     }
 }

@@ -1,11 +1,10 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateBooksTable extends Migration
+class CreateBorrowingHistoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +13,13 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('borrowing_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('isbn')->unique();
-            $table->string('title', 255);
             $table->foreignId('user_id')->constrained();
-            $table->string('slug', 255)->unique();
-            $table->string('summary');
+            $table->foreignId('book_id')->constrained();
             $table->timestamps();
+            $table->timestamp('due_date')->nullable();
+            $table->integer('status')->default(0);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateBooksTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('borrowing_histories');
     }
 }
