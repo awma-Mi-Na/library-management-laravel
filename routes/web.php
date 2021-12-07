@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AdminAddBookController;
+use App\Http\Controllers\AdminBorrowingsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
@@ -36,6 +38,9 @@ Route::post('logout', [SessionsController::class, 'destroy']);
 //? admin controller
 Route::get('admin/books', [AdminController::class, 'index'])->middleware('isAdmin');
 Route::delete('admin/books/{book}', [AdminController::class, 'destroy'])->middleware('isAdmin');
+Route::get('admin/borrowings', [AdminBorrowingsController::class, 'index'])->middleware('isAdmin');
+Route::get('admin/add-book', [BookController::class, 'create'])->middleware('isAdmin');
+Route::post('admin/add-book', [BookController::class, 'store'])->middleware('isAdmin');
 
 //? books controller
 Route::get('/books/{book:slug}', [BookController::class, 'show']);

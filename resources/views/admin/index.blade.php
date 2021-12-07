@@ -1,16 +1,7 @@
 <x-layout>
     <x-section>
 
-        <x-dashboard.top-nav>
-            <x-dashboard.nav-item
-                title='All Books'
-                uri='/admin/books'
-            />
-            <x-dashboard.nav-item
-                title='Borrowed Books'
-                uri='/admin/borrowed'
-            />
-        </x-dashboard.top-nav>
+        <x-dashboard.admin-nav />
 
         <main>
             <table class="bg-gray-100 border-2 border-gray-200 text-left w-full my-6">

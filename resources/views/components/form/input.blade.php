@@ -10,6 +10,7 @@
         type="{{ $type }}"
         name="{{ $field }}"
         id="{{ $field }}"
+        value="{{ old($field) }}"
     >
 </div>
 @error($field)

@@ -22,4 +22,16 @@ class BookController extends Controller
         // }
         return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed]);
     }
+
+    public function create()
+    {
+
+        $authors = Book::select('user_id')->distinct()->get();
+        return view('admin.add-book', ['authors' => $authors]);
+    }
+
+    public function store()
+    {
+        //! validate the entries and store them on books.
+    }
 }
