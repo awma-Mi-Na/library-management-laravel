@@ -29,4 +29,12 @@ class Borrowing_history extends Model
     {
         return Carbon::parse($due_date);
     }
+
+    public function getReturnedDateAttribute($returned_date)
+    {
+        if ($returned_date)
+            return Carbon::parse($returned_date);
+        else
+            return;
+    }
 }

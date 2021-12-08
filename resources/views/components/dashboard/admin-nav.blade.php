@@ -11,4 +11,9 @@
         title='Add Book'
         uri='/admin/add-book'
     />
+    <x-dashboard.nav-item
+        title='Add Author'
+        uri='/admin/add-author'
+    />
+
 </x-dashboard.top-nav>

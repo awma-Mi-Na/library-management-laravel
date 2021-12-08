@@ -34,7 +34,7 @@
                 </a>
 
                 <form
-                    action=""
+                    action="/"
                     method="GET"
                     class="bg-white col-span-4 rounded-md"
                 >

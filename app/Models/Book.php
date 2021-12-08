@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Book as ModelsBook;
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,7 +15,7 @@ class Book extends Model
 
     public function author()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Author::class);
     }
 
     public function borrowings()
@@ -34,7 +35,7 @@ class Book extends Model
             $query
                 ->whereHas('author', function ($query) use ($author) {
                     $query
-                        ->where('username', $author);
+                        ->where('name', 'like', '%' . $author . '%');
                 });
         });
 

@@ -1,18 +1,9 @@
 <x-layout>
     <x-section>
-        <x-dashboard.top-nav>
-            <x-dashboard.nav-item
-                title="Borrowings"
-                uri="/borrowings"
-            />
-            <x-dashboard.nav-item
-                title="History"
-                uri='/borrowings-history'
-            />
-        </x-dashboard.top-nav>
+        <x-dashboard.user-nav />
 
         <main>
-            <table class="text-left">
+            <table class="bg-gray-100 border-2 border-gray-200 text-left w-full my-6">
                 <thead>
                     <tr>
                         <th>
@@ -33,33 +24,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($borrowings as $borrowing)
+                    @if ($borrowings->count() > 0)
+                        @foreach ($borrowings as $borrowing)
+                            <tr>
+                                <td>{{ $borrowing->borrows->title }}</td>
+                                <td>{{ $borrowing->borrows->author->name }}</td>
+                                <td>{{ $borrowing->created_at->format('d/m/Y H:i:s') }}</td>
+                                <td>{{ $borrowing->due_date->format('d/m/Y H:i:s') }}</td>
+                                <td>
+                                    {{ App\Http\Controllers\FeeController::findLateFee($borrowing) }}
+                                    <br />
+                                    <a
+                                        href="/borrowings/{{ $borrowing->id }}"
+                                        class="hover:text-red-700 text-red-500 text-xs"
+                                    >Pay/Return Book</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td>{{ $borrowing->borrows->title }}</td>
-                            <td>{{ $borrowing->borrows->author->name }}</td>
-                            <td>{{ $borrowing->created_at->format('d/m/Y H:m:s') }}</td>
-                            <td>{{ $borrowing->due_date->format('d/m/Y H:m:s') }}</td>
-                            <td>
-                                {{ App\Http\Controllers\FeeController::findLateFee($borrowing) }}
-                                <br />
-                                <a
-                                    href="/borrowings/{{ $borrowing->id }}"
-                                    class="hover:text-red-700 text-red-500 text-xs"
-                                >Pay/Return Book</a>
-                            </td>
+                            <td>No books borrowed.</td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </main>
     </x-section>
 </x-layout>
 
-<style>
-    td,
-    th {
-        border: 1px solid black;
-        padding: 10px;
-    }
-
-</style>
+<x-dashboard.table-style />

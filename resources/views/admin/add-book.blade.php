@@ -18,13 +18,13 @@
                     <select
                         name="author_id"
                         id="author_id"
-                        class="focus:outline-none mb-4"
+                        class="border border-gray-400 focus:outline-none mb-4 px-2 py-1 w-full"
                     >
                         @foreach ($authors as $author)
                             <option
-                                value="{{ $author->user_id }}"
+                                value="{{ $author->id }}"
                                 {{ old('author_id') ? 'selected' : '' }}
-                            >{{ $author->author->name }}</option>
+                            >{{ $author->name }}</option>
                         @endforeach
                     </select>
                     <x-form.input field="isbn" />

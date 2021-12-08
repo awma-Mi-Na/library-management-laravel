@@ -16,8 +16,8 @@
                             <td class="border-gra">{{ $borrowing->borrows->title }}</td>
                             <td>{{ $borrowing->borrows->author->name }}</td>
                             <td>{{ $borrowing->borrower->name }}</td>
-                            <td>{{ $borrowing->created_at->format('d/m/Y H:m:s') }}</td>
-                            <td>{{ $borrowing->due_date->format('d/m/Y H:m:s') }}</td>
+                            <td>{{ $borrowing->created_at->format('d/m/Y H:i:s') }}</td>
+                            <td>{{ $borrowing->due_date->format('d/m/Y H:i:s') }}</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -25,12 +25,4 @@
         </main>
     </x-section>
 </x-layout>
-<style>
-    th,
-    td {
-        padding: 10px;
-        border-bottom: 1px solid rgb(209, 213, 219);
-        /* border-bottom-color: rgba(229, 231, 235, var(--tw-border-opacity)); */
-    }
-
-</style>
+<x-dashboard.table-style />

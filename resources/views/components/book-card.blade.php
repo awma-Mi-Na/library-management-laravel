@@ -4,7 +4,7 @@
     <a href="/books/{{ $book->slug }}">
         <p class="font-semibold mb-2 text-lg">{{ $book->title }}</p>
     </a>
-    <a href="?author={{ $book->author->username }}&{{ http_build_query(request()->except('page', 'author')) }}">
+    <a href="?author={{ $book->author->name }}&{{ http_build_query(request()->except('page', 'author')) }}">
         <span class="bg-green-300 px-2 py-1 rounded-full text-sm"> {{ $book->author->name }} </span>
     </a>
     <p class="line-clamp-5">

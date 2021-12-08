@@ -18,7 +18,6 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->sentence(4),
             'slug' => $this->faker->slug(4),
-            'user_id' => User::factory()->create(),
             'summary' => $this->faker->sentence(25),
             'isbn' => $this->faker->numberBetween(100000, 999999)
         ];

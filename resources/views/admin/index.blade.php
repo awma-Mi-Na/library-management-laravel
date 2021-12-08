@@ -12,7 +12,7 @@
                 <tbody>
                     @foreach ($books as $book)
                         <tr>
-                            <td>{{ $book->title }}</td>
+                            <td><a href="/books/{{ $book->slug }}">{{ $book->title }}</a></td>
                             <td>{{ $book->author->name }}</td>
                             <td>
                                 <form
@@ -46,10 +46,4 @@
     </x-section>
 </x-layout>
 
-<style>
-    th,
-    td {
-        padding: 10px;
-    }
-
-</style>
+<x-dashboard.table-style />
