@@ -9,3 +9,13 @@
         </div>
     </x-section>
 </x-layout>
+
+<style>
+    .line-clamp {
+        display: -webkit-box;
+        -webkit-line-clamp: 5;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+</style>

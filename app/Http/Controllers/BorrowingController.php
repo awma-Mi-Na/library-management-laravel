@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Book;
 use App\Models\Borrowing;
 use App\Models\Borrowing_history;
 use Carbon\Carbon;
@@ -25,6 +26,9 @@ class BorrowingController extends Controller
         ]);
         $attributes['due_date'] = Carbon::create(now());
         $borrowing = Borrowing::create($attributes);
+        dd($borrowing->book_id);
+        Book::find($borrowing->book_id)->decrement('copies');
+
         $attributes = array_merge($attributes, ['status' => 0, 'borrowing_id' => $borrowing->id]);
         Borrowing_history::create($attributes);
         return back()->with('success', 'Book has been added to borrowed');

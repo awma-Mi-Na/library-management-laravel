@@ -30,6 +30,7 @@
                     <x-form.input field="isbn" />
                     <x-form.input field="slug" />
                     <x-form.input field="summary" />
+                    <x-form.input field="copies" />
                     <x-form.submit-button text='Add Book' />
                 </form>
             </div>

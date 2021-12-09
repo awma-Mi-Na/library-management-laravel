@@ -17,7 +17,7 @@ class CreateBorrowingsTable extends Migration
         Schema::create('borrowings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('book_id')->unique()->constrained()->cascadeOnDelete();
+            $table->foreignId('book_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
             $table->timestamp('due_date')->nullable();
         });

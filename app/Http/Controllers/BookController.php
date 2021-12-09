@@ -16,11 +16,13 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        $isBorrowed = $book->borrowings->contains('book_id', $book->id);
+        $isBorrowed = $book->borrowings->contains('user_id', auth()->user()->id);
+        $isCopyAvailable = AvailableCopiesController::findCopies($book) > 0;
+        // dd($isBorrowed, $isCopyAvailable);
         // if ($user_id = auth()->user()->id) {
         //     $isBorrowed = $book->borrowings->contains('user_id', $user_id);
         // }
-        return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed]);
+        return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed, 'isCopyAvailable' => $isCopyAvailable]);
     }
 
     public function create()
@@ -39,6 +41,7 @@ class BookController extends Controller
             'isbn' => ['required', Rule::unique('books', 'isbn'), 'digits:6'],
             'slug' => ['required', Rule::unique('books', 'slug')],
             'summary' => 'required|max:255',
+            'copies' => 'required|numeric|min:1'
         ]);
         Book::create($attributes);
         return back()->with('success', 'Book has been added');

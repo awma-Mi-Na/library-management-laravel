@@ -8,12 +8,16 @@
                 <thead>
                     <th>Title</th>
                     <th>Author</th>
+                    <th>No. Copies</th>
+                    <th>No. Borrowed Copies</th>
                 </thead>
                 <tbody>
                     @foreach ($books as $book)
                         <tr>
                             <td><a href="/books/{{ $book->slug }}">{{ $book->title }}</a></td>
                             <td>{{ $book->author->name }}</td>
+                            <td>{{ $book->copies }}</td>
+                            <td>{{ App\Http\Controllers\AvailableCopiesController::borrowedCopies($book) }}</td>
                             <td>
                                 <form
                                     action="/admin/books/{{ $book->id }}"
