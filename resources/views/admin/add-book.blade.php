@@ -18,7 +18,7 @@
                     <select
                         name="author_id"
                         id="author_id"
-                        class="border border-gray-400 focus:outline-none mb-4 px-2 py-1 w-full"
+                        class="border border-gray-400 focus:outline-none mb-4 p-2 w-full text-xs"
                     >
                         @foreach ($authors as $author)
                             <option

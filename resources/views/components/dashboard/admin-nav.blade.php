@@ -4,8 +4,12 @@
         uri='/admin/books'
     />
     <x-dashboard.nav-item
-        title='Borrowed Books'
-        uri='/admin/borrowings'
+        title='Search records'
+        uri='/admin/search-records'
+    />
+    <x-dashboard.nav-item
+        title='Records'
+        uri='/admin/records'
     />
     <x-dashboard.nav-item
         title='Add Book'

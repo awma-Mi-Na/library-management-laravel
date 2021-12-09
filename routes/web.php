@@ -3,14 +3,17 @@
 use App\Http\Controllers\AdminAddBookController;
 use App\Http\Controllers\AdminBorrowingsController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminRecordsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BorrowingController;
 use App\Http\Controllers\BorrowingHistoryController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SearchRecordsController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UserController;
 use App\Models\Borrowing;
+use App\Models\Borrowing_history;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
@@ -40,7 +43,9 @@ Route::post('logout', [SessionsController::class, 'destroy']);
 //? admin controller
 Route::get('admin/books', [AdminController::class, 'index'])->middleware('isAdmin');
 Route::delete('admin/books/{book}', [AdminController::class, 'destroy'])->middleware('isAdmin');
-Route::get('admin/borrowings', [AdminBorrowingsController::class, 'index'])->middleware('isAdmin');
+Route::get('admin/records', AdminRecordsController::class)->middleware('isAdmin');
+Route::get('admin/search-records', [SearchRecordsController::class, 'index'])->middleware('isAdmin');
+Route::post('admin/search-records', [SearchRecordsController::class, 'search'])->middleware('isAdmin');
 
 //? books controller
 Route::get('/books/{book:slug}', [BookController::class, 'show']);
@@ -65,5 +70,5 @@ Route::post('admin/add-author', [AuthorController::class, 'store'])->middleware(
 
 //! for testing
 Route::get('test', function () {
-    dd(!request(['hh']));
+    dd(Borrowing_history::all()->whereIn('book_id', [3, 8]));
 });

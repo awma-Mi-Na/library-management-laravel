@@ -1,6 +1,6 @@
 <x-dashboard.top-nav>
     <x-dashboard.nav-item
-        title="Borrowings"
+        title="Borrowing"
         uri="/borrowings"
     />
     <x-dashboard.nav-item

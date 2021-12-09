@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Book;
-use App\Models\Borrowing;
-use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class BookController extends Controller
@@ -42,8 +40,7 @@ class BookController extends Controller
             'slug' => ['required', Rule::unique('books', 'slug')],
             'summary' => 'required|max:255',
         ]);
-        dd($attributes);
-        // Book::create($attributes);
+        Book::create($attributes);
         return back()->with('success', 'Book has been added');
     }
 }
