@@ -26,8 +26,7 @@ class BorrowingController extends Controller
         ]);
         $attributes['due_date'] = Carbon::create(now());
         $borrowing = Borrowing::create($attributes);
-        dd($borrowing->book_id);
-        Book::find($borrowing->book_id)->decrement('copies');
+        // Book::find($borrowing->book_id)->decrement('copies');
 
         $attributes = array_merge($attributes, ['status' => 0, 'borrowing_id' => $borrowing->id]);
         Borrowing_history::create($attributes);

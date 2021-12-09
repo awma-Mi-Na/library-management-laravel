@@ -14,7 +14,7 @@
                 {{ $book->summary }}
             </p>
 
-            @auth
+            @cannot('admin')
                 @if (!$isBorrowed and $isCopyAvailable)
 
                     <form
@@ -44,6 +44,8 @@
                             No copy available</span>
                     </div>
                 @endif
+            @elsecan('admin')
+
             @else
                 <p><a
                         href="/register"
@@ -52,7 +54,7 @@
                         href="/login"
                         class="hover:text-blue-400 hover:underline text-blue-600"
                     >Log in</a> to borrow this book.</p>
-            @endauth
+            @endcannot
         </div>
     </x-section>
 </x-layout>
