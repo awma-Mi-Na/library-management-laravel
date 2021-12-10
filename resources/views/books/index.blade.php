@@ -1,12 +1,16 @@
 <x-layout>
     <x-section>
 
-        <div class="grid grid-cols-12">
 
-            @foreach ($books as $book)
-                <x-book-card :book="$book" />
-            @endforeach
-        </div>
+        @if ($books->count() > 0)
+            <div class="grid grid-cols-12">
+                @foreach ($books as $book)
+                    <x-book-card :book="$book" />
+                @endforeach
+            </div>
+        @else
+            <p>No books found</p>
+        @endif
     </x-section>
 </x-layout>
 
