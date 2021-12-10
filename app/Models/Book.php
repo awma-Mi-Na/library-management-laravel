@@ -28,6 +28,11 @@ class Book extends Model
         return $this->hasMany(Borrowing_history::class);
     }
 
+    public function book_categories()
+    {
+        return $this->hasMany(BookCategory::class);
+    }
+
     public function scopeFilter($query, array $filters)
     {
         //? to filter results based on author
@@ -46,6 +51,11 @@ class Book extends Model
                     $query
                         ->where('title', 'like', '%' . $search . '%');
                 });
+        });
+
+        $query->when($filters['category'] ?? false, function ($query, $category) {
+            $query->where(function ($query) use ($category) {
+            });
         });
     }
 }

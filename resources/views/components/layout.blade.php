@@ -46,6 +46,11 @@
                         value="{{ request('author') }}"
                     >
                     <input
+                        type="hidden"
+                        name="category"
+                        value="{{ request('category') }}"
+                    >
+                    <input
                         type="search"
                         name="search"
                         id="search"

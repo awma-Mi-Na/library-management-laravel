@@ -4,14 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\Category;
 use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::filter(request(['author', 'search']))->get();
-        return view('books.index', ['books' => $books]);
+        $books = Book::filter(request(['author', 'search']))->paginate(9);
+        $categories = Category::all();
+        return view('books.index', ['books' => $books, 'categories' => $categories]);
     }
 
     public function show(Book $book)
