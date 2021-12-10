@@ -16,13 +16,14 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        $isBorrowed = $book->borrowings->contains('user_id', auth()->user()->id);
+        if (auth()->user())
+            $isBorrowed = $book->borrowings->contains('user_id', auth()->user()->id);
         $isCopyAvailable = AvailableCopiesController::findCopies($book) > 0;
         // dd($isBorrowed, $isCopyAvailable);
         // if ($user_id = auth()->user()->id) {
         //     $isBorrowed = $book->borrowings->contains('user_id', $user_id);
         // }
-        return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed, 'isCopyAvailable' => $isCopyAvailable]);
+        return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed ?? false, 'isCopyAvailable' => $isCopyAvailable]);
     }
 
     public function create()
@@ -45,5 +46,28 @@ class BookController extends Controller
         ]);
         Book::create($attributes);
         return back()->with('success', 'Book has been added');
+    }
+
+    public function edit(Book $book)
+    {
+        $authors = Author::all();
+        return view('admin.edit-book', ['book' => $book, 'authors' => $authors]);
+    }
+
+    public function update(Book $book)
+    {
+        $attributes = request()->validate([
+            'title' => 'required',
+            'slug' => ['required', Rule::unique('books')->ignore($book->id)],
+            'isbn' => ['required', Rule::unique('books', 'isbn')->ignore($book->id), 'digits:6'],
+            'author_id' => ['required', Rule::exists('authors', 'id')],
+            'summary' => ['required'],
+            'copies' => ['required', 'numeric']
+        ]);
+
+        // dd($attributes);
+
+        $book->update($attributes);
+        return back()->with('success', 'Book details updated successfully');
     }
 }

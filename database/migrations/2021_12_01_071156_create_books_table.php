@@ -21,7 +21,7 @@ class CreateBooksTable extends Migration
             $table->foreignId('author_id')->constrained();
             $table->string('slug', 255)->unique();
             $table->string('summary');
-            $table->integer('copies')->default(1);
+            $table->integer('copies')->default(4);
             $table->timestamps();
         });
     }

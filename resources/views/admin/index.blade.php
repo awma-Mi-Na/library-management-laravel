@@ -18,6 +18,10 @@
                             <td>{{ $book->author->name }}</td>
                             <td>{{ $book->copies }}</td>
                             <td>{{ App\Http\Controllers\AvailableCopiesController::borrowedCopies($book) }}</td>
+                            <td><a
+                                    href="/admin/edit-book/{{ $book->id }}"
+                                    class="text-xs text-blue-500 hover:text-blue-700"
+                                >Edit</a></td>
                             <td>
                                 <form
                                     action="/admin/books/{{ $book->id }}"

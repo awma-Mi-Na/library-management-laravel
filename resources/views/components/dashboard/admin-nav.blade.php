@@ -1,3 +1,4 @@
+@props(['book'])
 <x-dashboard.top-nav>
     <x-dashboard.nav-item
         title='All Books'
