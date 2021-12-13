@@ -72,5 +72,5 @@ Route::post('admin/add-author', [AuthorController::class, 'store'])->middleware(
 
 //! for testing
 Route::get('test', function () {
-    dd(Borrowing_history::all()->whereIn('book_id', [3, 8]));
+    dump(request()->input('category'));
 });

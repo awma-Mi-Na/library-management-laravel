@@ -10,6 +10,7 @@ class Borrowing extends Model
 {
     use HasFactory;
 
+
     public function borrower()
     {
         return $this->belongsTo(User::class, 'user_id');

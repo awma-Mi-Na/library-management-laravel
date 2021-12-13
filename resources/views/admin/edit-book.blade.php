@@ -32,7 +32,7 @@
                         @foreach ($authors as $author)
                             <option
                                 value="{{ $author->id }}"
-                                {{ old('author_id') ? 'selected' : '' }}
+                                {{ $author->id === $book->author_id ? 'selected' : '' }}
                             >{{ $author->name }}</option>
                         @endforeach
                     </select>

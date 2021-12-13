@@ -11,7 +11,7 @@ class Book extends Model
 {
     use HasFactory;
 
-    protected $with = ['author'];
+    protected $with = ['author', 'borrowings'];
 
     public function author()
     {
@@ -53,9 +53,23 @@ class Book extends Model
                 });
         });
 
+        //? check if a book belongs to a category, how? a book has many categories, get all the category titles of the book, then check if there exists a title like filters['category']
+        // $query->when($filters['category'] ?? false, function ($query, $category) {
+        //     $book_ids = DB::table('book_categories')->whereExists(function () use ($category) {
+        //         DB::table('categories')->where('id',);
+        //     });
+        //     $query->whereIn('id',);
+        // });
+
         $query->when($filters['category'] ?? false, function ($query, $category) {
-            $query->where(function ($query) use ($category) {
-            });
+            $query
+                ->where(function ($query) use ($category) {
+                    $query->whereHas('book_categories', function ($query) use ($category) {
+                        $query->whereHas('category', function ($query) use ($category) {
+                            $query->where('title', 'like', '%' . $category . '%');
+                        });
+                    });
+                });
         });
     }
 }

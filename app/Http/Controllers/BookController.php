@@ -11,9 +11,10 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::filter(request(['author', 'search']))->paginate(9);
+        $books = Book::filter(request(['author', 'search', 'category']))->paginate(9);
         $categories = Category::all();
-        return view('books.index', ['books' => $books, 'categories' => $categories]);
+        $authors = Author::all();
+        return view('books.index', ['books' => $books, 'categories' => $categories, 'authors' => $authors]);
     }
 
     public function show(Book $book)
@@ -71,5 +72,10 @@ class BookController extends Controller
 
         $book->update($attributes);
         return back()->with('success', 'Book details updated successfully');
+    }
+
+    public static function findCategories(Book $book)
+    {
+        return $book->book_categories->pluck('category')->pluck('title')->toArray();
     }
 }
