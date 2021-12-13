@@ -8,7 +8,7 @@ class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.index', ['books' => Book::all()]);
+        return view('admin.index', ['books' => Book::paginate(20)]);
     }
 
     public function destroy(Book $book)
