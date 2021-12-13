@@ -3,8 +3,8 @@
         <x-dashboard.user-nav />
 
         <main>
-            <table class="bg-gray-100 border-2 border-gray-200 text-left w-full my-6">
-                <thead>
+            <x-dashboard.table>
+                <x-slot name='headings'>
                     <tr>
                         <th>
                             Book Title
@@ -22,8 +22,8 @@
                             Late Fee (Rs.)
                         </th>
                     </tr>
-                </thead>
-                <tbody>
+                </x-slot>
+                <x-slot name='rows'>
                     @if ($borrowings->count() > 0)
                         @foreach ($borrowings as $borrowing)
                             <tr>
@@ -46,8 +46,8 @@
                             <td>No books borrowed.</td>
                         </tr>
                     @endif
-                </tbody>
-            </table>
+                </x-slot>
+            </x-dashboard.table>
         </main>
     </x-section>
 </x-layout>

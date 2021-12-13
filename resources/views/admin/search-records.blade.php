@@ -28,8 +28,8 @@
             @if (isset($results))
                 <div class="my-6">
                     <h1 class="text-xl font-semibold mb-4">Search results:</h1>
-                    <table class="bg-gray-100 border-2 border-gray-200 text-left w-full">
-                        <thead>
+                    <x-dashboard.table>
+                        <x-slot name="headings">
                             <tr>
                                 <th>Title</th>
                                 <th>Borrowed Date</th>
@@ -38,14 +38,17 @@
                                 <th>Borrowed By</th>
                                 <th>Status</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @if ($results->count() < 1)
+                        </x-slot>
+                        @if ($results->count() < 1)
+                            <x-slot name='rows'>
                                 <tr>
                                     <td>No records found</td>
                                 </tr>
-                            @else
-                                @foreach ($results as $record)
+                            </x-slot>
+                        @else
+                            @foreach ($results as $record)
+                                <x-slot name='rows'>
+
                                     <tr>
                                         <td>{{ $record->borrows->title }}</td>
                                         <td>{{ $record->created_at->format('d/m/Y H:i:s') }}</td>
@@ -57,11 +60,10 @@
                                             class="{{ $record->status == 0 ? 'text-red-500' : 'text-blue-500' }} text-xs">
                                             {{ $record->status == 0 ? 'Borrowing' : 'Returned' }}</td>
                                     </tr>
-                                @endforeach
-                            @endif
-
-                        </tbody>
-                    </table>
+                                </x-slot>
+                            @endforeach
+                        @endif
+                    </x-dashboard.table>
                 </div>
             @else
                 <p class="my-6 text-xl font-semibold">No results found.</p>

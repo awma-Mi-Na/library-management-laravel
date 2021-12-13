@@ -4,19 +4,19 @@
         <x-dashboard.admin-nav />
 
         <main>
-            <table class="bg-gray-100 border-2 border-gray-200 text-left w-full my-6">
-                <thead>
+            <x-dashboard.table>
+                <x-slot name='headings'>
                     <th>S.no</th>
                     <th>Title</th>
                     <th>ISBN</th>
                     <th>Author</th>
                     <th>No. Copies</th>
                     <th>No. Borrowed Copies</th>
-                </thead>
-                <tbody>
+                </x-slot>
+                <x-slot name='rows'>
                     @foreach ($books as $book)
                         <tr>
-                            <td>{{ $loop->iteration + (request()->input('page') - 1) * 20 }}.</td>
+                            <td>{{ $loop->iteration + ((request()->input('page') ?? 1) - 1) * 20 }}.</td>
                             <td><a href="/books/{{ $book->slug }}">{{ $book->title }}</a></td>
                             <td>{{ $book->isbn }}</td>
                             <td>{{ $book->author->name }}</td>
@@ -51,8 +51,8 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
-            </table>
+                </x-slot>
+            </x-dashboard.table>
             {{ $books->links() }}
         </main>
 
