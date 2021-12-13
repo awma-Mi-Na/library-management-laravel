@@ -27,7 +27,9 @@
                     @if ($borrowings->count() > 0)
                         @foreach ($borrowings as $borrowing)
                             <tr>
-                                <td>{{ $borrowing->borrows->title }}</td>
+                                <td><a
+                                        href="/books/{{ $borrowing->borrows->slug }}">{{ $borrowing->borrows->title }}</a>
+                                </td>
                                 <td>{{ $borrowing->borrows->author->name }}</td>
                                 <td>{{ $borrowing->created_at->format('d/m/Y H:i:s') }}</td>
                                 <td>{{ $borrowing->due_date->format('d/m/Y H:i:s') }}</td>
