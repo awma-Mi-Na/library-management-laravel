@@ -40,18 +40,26 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($results as $record)
+                            @if ($results->count() < 1)
                                 <tr>
-                                    <td>{{ $record->borrows->title }}</td>
-                                    <td>{{ $record->created_at->format('d/m/Y H:i:s') }}</td>
-                                    <td>{{ $record->due_date->format('d/m/Y H:i:s') }}</td>
-                                    <td>{{ $record->returned_date ? $record->returned_date->format('d/m/Y H:i:s') : '---' }}
-                                    </td>
-                                    <td>{{ $record->borrower->name }}</td>
-                                    <td class="{{ $record->status == 0 ? 'text-red-500' : 'text-blue-500' }} text-xs">
-                                        {{ $record->status == 0 ? 'Borrowing' : 'Returned' }}</td>
+                                    <td>No records found</td>
                                 </tr>
-                            @endforeach
+                            @else
+                                @foreach ($results as $record)
+                                    <tr>
+                                        <td>{{ $record->borrows->title }}</td>
+                                        <td>{{ $record->created_at->format('d/m/Y H:i:s') }}</td>
+                                        <td>{{ $record->due_date->format('d/m/Y H:i:s') }}</td>
+                                        <td>{{ $record->returned_date ? $record->returned_date->format('d/m/Y H:i:s') : '---' }}
+                                        </td>
+                                        <td>{{ $record->borrower->name }}</td>
+                                        <td
+                                            class="{{ $record->status == 0 ? 'text-red-500' : 'text-blue-500' }} text-xs">
+                                            {{ $record->status == 0 ? 'Borrowing' : 'Returned' }}</td>
+                                    </tr>
+                                @endforeach
+                            @endif
+
                         </tbody>
                     </table>
                 </div>

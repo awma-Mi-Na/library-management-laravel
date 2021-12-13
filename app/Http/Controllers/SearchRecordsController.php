@@ -23,6 +23,7 @@ class SearchRecordsController extends Controller
         ]);
 
         $results = Borrowing_history::filter($attributes)->get();
+        // dd($results->count());
         return view('admin.search-records', ['results' => $results]);
     }
 }
