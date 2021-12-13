@@ -23,8 +23,9 @@
 </head>
 
 <body>
-    <div class="w-full lg:h-28 bg-gray-600">
-        <header class="max-w-6xl mx-auto pt-8 text-white">
+    </div>
+    <div class="bg-gray-600 flex items-center justify-center lg:h-28 w-full">
+        <header class="max-w-6xl text-white w-full">
             <div class="grid grid-cols-10 items-center">
                 <a
                     href="/"
@@ -36,7 +37,7 @@
                 <form
                     action="/"
                     method="GET"
-                    class="bg-white col-span-4 rounded-md"
+                    class="bg-white col-span-4 rounded-full"
                 >
 
                     <i class="border-r-2 fa-search fas h-full pl-2.5 py-1 text-black w-1/12"></i>
