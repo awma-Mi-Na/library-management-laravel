@@ -71,5 +71,23 @@ class Book extends Model
                     });
                 });
         });
+
+        $query->when($filters['sortBy'] ?? false, function ($query, $sortBy) {
+            dd($sortBy === 'most borrowed');
+            $query
+                ->where(function ($query) use ($sortBy) {
+                    switch ($sortBy) {
+                        case 'popularity':
+
+                            break;
+
+                        case 'most borrowed':
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                });
+        });
     }
 }

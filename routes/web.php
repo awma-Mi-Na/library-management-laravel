@@ -12,6 +12,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchRecordsController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\UserController;
+use App\Models\Book;
 use App\Models\Borrowing;
 use App\Models\Borrowing_history;
 use Carbon\Carbon;
@@ -72,5 +73,6 @@ Route::post('admin/add-author', [AuthorController::class, 'store'])->middleware(
 
 //! for testing
 Route::get('test', function () {
-    dump(request()->input('category'));
+    $books = Book::all()->groupBy('author_id');
+    dd($books[2]);
 });

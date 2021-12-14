@@ -1,4 +1,4 @@
-@props(['field', 'type' => 'text', 'text'])
+@props(['field', 'type' => 'text', 'text' => ''])
 
 <div class="mb-4">
     <label

@@ -48,6 +48,16 @@
                     </option>
                 @endforeach
             </x-nav-filters>
+            <x-sort-filter>
+                @foreach ($sort_options as $sortBy)
+                    <option
+                        value="?sortBy={{ $sortBy }}&{{ http_build_query(request()->except('sortBy', 'page')) }}"
+                        {{ request()->input(['sortBy']) === $sortBy ? 'selected' : '' }}
+                    >
+                        {{ ucwords($sortBy) }}
+                    </option>
+                @endforeach
+            </x-sort-filter>
         </nav>
 
         @if ($books->count() > 0)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Book;
+use App\Models\BookCategory;
 use App\Models\Category;
 use Illuminate\Validation\Rule;
 
@@ -11,10 +12,11 @@ class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::filter(request(['author', 'search', 'category']))->paginate(9);
+        $books = Book::filter(request(['author', 'search', 'category', 'sortBy']))->paginate(9);
         $categories = Category::all();
         $authors = Author::all();
-        return view('books.index', ['books' => $books, 'categories' => $categories, 'authors' => $authors]);
+        $sort_options = ['popularity', 'most borrowed'];
+        return view('books.index', ['books' => $books, 'categories' => $categories, 'authors' => $authors, 'sort_options' => $sort_options]);
     }
 
     public function show(Book $book)
@@ -33,21 +35,37 @@ class BookController extends Controller
     {
 
         $authors = Author::all();
-        return view('admin.add-book', ['authors' => $authors]);
+        $categories = Category::all();
+        return view('admin.add-book', ['authors' => $authors, 'categories' => $categories]);
     }
 
     public function store()
     {
+        // dd(request()->input('category'));
+        // $categories = request()->validate([
+        //     'category.*' => 'nullable|exists:categories,title'
+        // ]);
+
+        // dd($categories);
+
         //! validate the entries and store them on books.
+        // dd(request()->all());
         $attributes = request()->validate([
             'title' => 'required',
             'author_id' => 'required|exists:authors,id',
             'isbn' => ['required', Rule::unique('books', 'isbn'), 'digits:6'],
             'slug' => ['required', Rule::unique('books', 'slug')],
             'summary' => 'required|max:255',
-            'copies' => 'required|numeric|min:1'
+            'copies' => 'required|numeric|min:1',
         ]);
-        Book::create($attributes);
+        $categories = request()->validate([
+            'category' => 'array|min:1|required',
+            'category.*' => 'nullable|exists:categories,id'
+        ]);
+        $book = Book::create($attributes);
+        foreach ($categories['category'] as $category_id) {
+            BookCategory::create(['book_id' => $book->id, 'category_id' => $category_id]);
+        }
         return back()->with('success', 'Book has been added');
     }
 
@@ -78,4 +96,19 @@ class BookController extends Controller
     {
         return $book->book_categories->pluck('category')->pluck('title')->toArray();
     }
+
+    // public static function sortBooks($option)
+    // {
+    //     switch ($option) {
+    //         case '1':
+    //             echo ('hello');
+    //             break;
+    //         case '2':
+    //             echo ('bye');
+    //             break;
+    //         default:
+    //             echo ('default');
+    //             break;
+    //     }
+    // }
 }
