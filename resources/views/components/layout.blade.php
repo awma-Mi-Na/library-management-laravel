@@ -23,7 +23,6 @@
 </head>
 
 <body>
-    </div>
     <div class="bg-gray-600 flex items-center justify-center lg:h-28 w-full">
         <header class="max-w-6xl text-white w-full">
             <div class="grid grid-cols-10 items-center">
@@ -56,7 +55,7 @@
                         name="search"
                         id="search"
                         class="focus:outline-none px-2 py-1 text-black text-sm w-10/12"
-                        placeholder="Search for books,authors..."
+                        placeholder="Search for books..."
                         value="{{ request('search') }}"
                     >
 
