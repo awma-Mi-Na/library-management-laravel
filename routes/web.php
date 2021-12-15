@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminAddBookController;
-use App\Http\Controllers\AdminBorrowingsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminRecordsController;
 use App\Http\Controllers\AuthorController;
@@ -11,12 +9,7 @@ use App\Http\Controllers\BorrowingHistoryController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SearchRecordsController;
 use App\Http\Controllers\SessionsController;
-use App\Http\Controllers\UserController;
 use App\Models\Book;
-use App\Models\Borrowing;
-use App\Models\Borrowing_history;
-use App\Models\IdeHelperBorrowing_history;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 
 /*
