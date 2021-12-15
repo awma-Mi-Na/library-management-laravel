@@ -19,11 +19,10 @@ class SearchRecordsController extends Controller
         $attributes = request()->validate([
             'title' => 'nullable',
             'name' => 'nullable',
-            'borrowed_date' => ['nullable', 'date_format:Y-m-d']
+            'borrowed_date' => ['nullable', 'date_format:d/m/Y']
         ]);
 
-        $results = Borrowing_history::filter($attributes)->get();
-        // dd($results->count());
-        return view('admin.search-records', ['results' => $results]);
+        $results = Borrowing_history::filter($attributes)->paginate(10);
+        return view('admin.search-results', ['results' => $results]);
     }
 }

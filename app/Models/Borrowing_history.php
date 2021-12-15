@@ -56,7 +56,10 @@ class Borrowing_history extends Model
         });
 
         $query->when($terms['borrowed_date'] ?? false, function ($query, $borrowed_date) {
+            $borrowed_date = Carbon::createFromFormat('d/m/Y', $borrowed_date)->toDateString();
             $query->orWhere('created_at', 'like', $borrowed_date . '%');
         });
     }
 }
+
+// Carbon::createFromFormat('d/m/Y','01/12/2021');

@@ -47,7 +47,8 @@ Route::get('admin/books', [AdminController::class, 'index'])->middleware('isAdmi
 Route::delete('admin/books/{book}', [AdminController::class, 'destroy'])->middleware('isAdmin');
 Route::get('admin/records', AdminRecordsController::class)->middleware('isAdmin');
 Route::get('admin/search-records', [SearchRecordsController::class, 'index'])->middleware('isAdmin');
-Route::post('admin/search-records', [SearchRecordsController::class, 'search'])->middleware('isAdmin');
+Route::get('admin/search-results', [SearchRecordsController::class, 'search'])->middleware('isAdmin');
+Route::post('admin/search-results', [SearchRecordsController::class, 'search'])->middleware('isAdmin');
 Route::get('admin/edit-book/{book}', [BookController::class, 'edit'])->middleware('isAdmin');
 Route::patch('admin/edit-book/{book}', [BookController::class, 'update'])->middleware('isAdmin');
 

@@ -50,7 +50,7 @@ class BookController extends Controller
 
                 $query
                     ->whereIn('id', $popularity_index)
-                    ->orderByRaw("FIELD(books.id,$popularity_index_order)");
+                    ->orderByRaw("FIELD(id,$popularity_index_order)");
             })->paginate(9);
 
         $categories = Category::all();

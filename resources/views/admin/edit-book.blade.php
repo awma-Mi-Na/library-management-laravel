@@ -3,10 +3,7 @@
 
         <main>
             <p>
-                <a
-                    href="/admin/books"
-                    class="text-blue-400 hover:underline"
-                >Go back</a>
+                <x-goback />
             </p>
             <div class="bg-blue-50 border border-gray-300 mt-6 mx-auto px-12 py-6 w-1/2">
                 <h1 class="text-2xl font-semibold mb-3">Edit Book</h1>
