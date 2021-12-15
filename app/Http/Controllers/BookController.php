@@ -6,16 +6,56 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Category;
+use DB;
 use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
     public function index()
     {
-        $books = Book::filter(request(['author', 'search', 'category', 'sortBy']))->paginate(9);
+        $books = Book::when(request('author') ?? false, function ($query, $author) {
+            $query->whereHas('author', function ($query) use ($author) {
+                $query->where('name', 'like', '%' . $author . '%');
+            });
+        })
+            ->when(request('category') ?? false, function ($query, $category) {
+                $query->where(function ($query) use ($category) {
+                    $query->whereHas('book_categories', function ($query) use ($category) {
+                        $query->whereHas('category', function ($query) use ($category) {
+                            $query->where('title', 'like', '%' . $category . '%');
+                        });
+                    });
+                });
+            })
+            ->when(request('search') ?? false, function ($query, $search) {
+                $query->where(function ($query) use ($search) {
+                    $query->where('title', 'like', '%' . $search . '%');
+                });
+            })
+            ->when(request('sortBy') == 'latest', function ($query) {
+                $query->latest();
+            })
+            ->when(request('sortBy') == 'oldest', function ($query) {
+                $query->oldest();
+            })
+            ->when(request('sortBy') == 'popularity', function ($query) {
+
+                //? get left join of books and borrowing_histories, then get the count of book_id in borrowing_histories and select all the book ids with their corresponding counts in borrowing histories. [note: left join is useful here because we can include count of 0 for those book_id's which are not present in borrowing_histories]
+                $popularity_index = Book::selectRaw("books.id,count(borrowing_histories.book_id) as 'times borrowed'")
+                    ->leftJoin('borrowing_histories', 'books.id', 'borrowing_histories.book_id')
+                    ->groupByRaw('books.id')
+                    ->orderByDesc('times borrowed')
+                    ->get()->pluck('id')->toArray();
+                $popularity_index_order = implode(',', $popularity_index);
+
+                $query
+                    ->whereIn('id', $popularity_index)
+                    ->orderByRaw("FIELD(books.id,$popularity_index_order)");
+            })->paginate(9);
+
         $categories = Category::all();
         $authors = Author::all();
-        $sort_options = ['popularity', 'most borrowed'];
+        $sort_options = ['popularity', 'latest', 'oldest'];
         return view('books.index', ['books' => $books, 'categories' => $categories, 'authors' => $authors, 'sort_options' => $sort_options]);
     }
 
@@ -24,10 +64,6 @@ class BookController extends Controller
         if (auth()->user())
             $isBorrowed = $book->borrowings->contains('user_id', auth()->user()->id);
         $isCopyAvailable = AvailableCopiesController::findCopies($book) > 0;
-        // dd($isBorrowed, $isCopyAvailable);
-        // if ($user_id = auth()->user()->id) {
-        //     $isBorrowed = $book->borrowings->contains('user_id', $user_id);
-        // }
         return view('books.show', ['book' => $book, 'isBorrowed' => $isBorrowed ?? false, 'isCopyAvailable' => $isCopyAvailable]);
     }
 
@@ -41,15 +77,6 @@ class BookController extends Controller
 
     public function store()
     {
-        // dd(request()->input('category'));
-        // $categories = request()->validate([
-        //     'category.*' => 'nullable|exists:categories,title'
-        // ]);
-
-        // dd($categories);
-
-        //! validate the entries and store them on books.
-        // dd(request()->all());
         $attributes = request()->validate([
             'title' => 'required',
             'author_id' => 'required|exists:authors,id',
@@ -86,8 +113,6 @@ class BookController extends Controller
             'copies' => ['required', 'numeric']
         ]);
 
-        // dd($attributes);
-
         $book->update($attributes);
         return back()->with('success', 'Book details updated successfully');
     }
@@ -96,19 +121,4 @@ class BookController extends Controller
     {
         return $book->book_categories->pluck('category')->pluck('title')->toArray();
     }
-
-    // public static function sortBooks($option)
-    // {
-    //     switch ($option) {
-    //         case '1':
-    //             echo ('hello');
-    //             break;
-    //         case '2':
-    //             echo ('bye');
-    //             break;
-    //         default:
-    //             echo ('default');
-    //             break;
-    //     }
-    // }
 }

@@ -11,8 +11,8 @@
         class="w-2/3 border border-gray-300 focus:border-gray-500 px-2 py-1 rounded-lg focus:outline-none transition duration-300"
     >
         <option
-            value="/"
-            {{ request()->is('/') ? 'selected' : '' }}
+            value="/?{{ http_build_query(request()->except(['sortBy', 'page'])) }}"
+            {{ request()->is(http_build_query(request()->except(['sortby', 'page']))) ? 'selected' : '' }}
         >All</option>
         {{ $slot }}
     </select>

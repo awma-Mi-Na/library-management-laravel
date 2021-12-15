@@ -1,6 +1,5 @@
 <x-layout>
     <x-section>
-
         <nav
             class="grid grid-cols-4 items-center justify-items-center text-sm"
             style="height: 5em"
