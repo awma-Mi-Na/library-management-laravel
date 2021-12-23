@@ -34,3 +34,12 @@ class DatabaseSeeder extends Seeder
         }
     }
 }
+/*
+for ($i=0; $i < 50; $i++) { 
+    $book=Book::factory()->create(['author_id'=>1]);
+    BookCategory::create(['book_id'=>$book->id,'category_id'=>rand(1,5)]);
+}
+
+? currently: 61 queries (58 books)
+? 
+*/

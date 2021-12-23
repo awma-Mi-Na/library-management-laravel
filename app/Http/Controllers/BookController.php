@@ -85,10 +85,15 @@ class BookController extends Controller
             'summary' => 'required|max:255',
             'copies' => 'required|numeric|min:1',
         ]);
-        $categories = request()->validate([
-            'category' => 'array|min:1|required',
-            'category.*' => 'nullable|exists:categories,id'
-        ]);
+        $categories = request()->validate(
+            [
+                'category' => 'array|min:1|required',
+                'category.*' => 'nullable|exists:categories,id'
+            ],
+            [
+                'category.*.exists' => 'The selected category does not exist'
+            ]
+        );
         $book = Book::create($attributes);
         foreach ($categories['category'] as $category_id) {
             BookCategory::create(['book_id' => $book->id, 'category_id' => $category_id]);

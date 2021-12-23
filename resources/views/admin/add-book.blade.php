@@ -37,7 +37,10 @@
                     @enderror
                     <x-form.input field="isbn" />
                     <x-form.input field="slug" />
-                    <x-form.textarea-input field="summary" />
+                    <x-form.textarea-input
+                        field="summary"
+                        :text="old('summary')"
+                    />
                     <x-form.checkbox-input title='category[]'>
                         @foreach ($categories as $category)
 
@@ -46,13 +49,16 @@
                                     name="category[]"
                                     id="{{ $category->id }}"
                                     value="{{ $category->id }}"
-                                > {{ ucwords($category->title) }}</label>
+                                    {{ (is_array(old('category')) and in_array("$category->id", old('category'))) ? 'checked' : '' }}
+                                >
+                                {{ ucwords($category->title) }}</label>
                         @endforeach
                         <label for="55"><input
                                 type="checkbox"
                                 name="category[]"
                                 id="55"
                                 value="55"
+                                {{ (is_array(old('category')) and in_array('55', old('category'))) ? 'checked' : '' }}
                             > Mai</label>
 
                         @error('category')
