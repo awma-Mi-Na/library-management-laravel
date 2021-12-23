@@ -15,7 +15,7 @@ class AdminRecordsController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $records = Borrowing_history::paginate(10);
+        $records = Borrowing_history::with('borrows')->paginate(10);
         return view('admin.records', ['records' => $records]);
     }
 }
