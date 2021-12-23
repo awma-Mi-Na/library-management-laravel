@@ -68,11 +68,5 @@ Route::post('admin/add-author', [AuthorController::class, 'store'])->middleware(
 
 //! for testing
 Route::get('test', function () {
-    $popularity_index = Book::selectRaw("books.id,count(borrowing_histories.book_id) as 'times_borrowed'")->leftJoin('borrowing_histories', 'books.id', 'borrowing_histories.book_id')->groupByRaw('books.id')->orderByDesc('times_borrowed')->get()->pluck('id')->toArray();
-
-    $popularity_index_order = implode(',', $popularity_index);
-
-    dump($popularity_index, $popularity_index_order);
-
-    Book::whereIn('id', $popularity_index)->orderByRaw("FIELD(id,$popularity_index_order)")->get()->dd();
+    return ['test' => 'hello world'];
 });
