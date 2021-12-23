@@ -51,7 +51,7 @@ class BookController extends Controller
                 $query
                     ->whereIn('id', $popularity_index)
                     ->orderByRaw("FIELD(id,$popularity_index_order)");
-            })->paginate(9);
+            })->with(['author', 'borrowings', 'book_categories', 'book_categories.category'])->paginate(20);
 
         $categories = Category::all();
         $authors = Author::all();
@@ -61,6 +61,7 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
+        // $book->with('borrowings');
         if (auth()->user())
             $isBorrowed = $book->borrowings->contains('user_id', auth()->user()->id);
         $isCopyAvailable = AvailableCopiesController::findCopies($book) > 0;
